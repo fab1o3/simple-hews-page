@@ -4,7 +4,7 @@ var app = new Vue({
         el: '#app',
         data: {
             feeds: [],
-            feedUrls: JSON.parse(localStorage.getItem('feedsUrl')),
+            feedUrls: [],
             parser: null,
             totalFeeds: 20,
             refreshDate: null,
@@ -30,9 +30,19 @@ var app = new Vue({
             this.parser = new RSSParser();
             this.refreshFeeds();
 			
-			if (localStorage.getItem("bookmarks")) {
-                this.bookmarks = JSON.parse(localStorage["bookmarks"]);
-            }
+	    	if (localStorage.getItem("feedsUrl")) {
+        		this.feedUrls = JSON.parse(localStorage["feedUrls"]);
+				this.totalFeeds = localStorage["totalFeeds"];
+        	} else {
+				localStorage.setItem("feedUrls", []);
+				localStorage.setItem("totalFeeds", 20);
+	    	}
+			
+	    	if (localStorage.getItem("bookmarks")) {
+        		this.bookmarks = JSON.parse(localStorage["bookmarks"]);
+        	} else {
+				localStorage.setItem("bookmarks", []);
+	    	}
         },
         methods: {
             addZero: function (i) {
