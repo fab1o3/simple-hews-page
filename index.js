@@ -1,5 +1,7 @@
 'use strict';
 
+const CORS_PROXY = "https://cors-anywhere.herokuapp.com/"
+
 var app = new Vue({
         el: '#app',
         data: {
@@ -73,7 +75,7 @@ var app = new Vue({
                 let singleFeed = Math.round(this.totalFeeds / this.feedUrls.length);
                 this.refreshDate = new Date();
                 this.feedUrls.forEach((url) => {
-                    this.parser.parseURL(url, (err, feed) => {
+                    this.parser.parseURL(CORS_PROXY + url, (err, feed) => {
                         if (err) {
                             throw err;
                         }
