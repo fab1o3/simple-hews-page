@@ -30,7 +30,7 @@ var app = new Vue({
             this.parser = new RSSParser();
             this.refreshFeeds();
 			
-	    	if (localStorage.getItem("feedsUrl")) {
+	    	if (localStorage.getItem("feedsUrls")) {
         		this.feedUrls = JSON.parse(localStorage["feedUrls"]);
 				this.totalFeeds = localStorage["totalFeeds"];
         	} else {
