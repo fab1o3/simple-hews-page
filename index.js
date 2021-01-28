@@ -28,8 +28,7 @@ var app = new Vue({
         },
         mounted: function () {
             this.parser = new RSSParser();
-            this.refreshFeeds();
-			
+
 	    	if (localStorage["feedUrls"]) {
         		this.feedUrls = JSON.parse(localStorage["feedUrls"]);
 				this.totalFeeds = localStorage["totalFeeds"];
@@ -43,6 +42,8 @@ var app = new Vue({
         	} else {
 				localStorage.setItem("bookmarks", []);
 	    	}
+			
+			this.refreshFeeds();
         },
         methods: {
             addZero: function (i) {
