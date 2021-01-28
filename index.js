@@ -1,7 +1,5 @@
 'use strict';
 
-const CORS_PROXY = "https://cors-anywhere.herokuapp.com/"
-
 var app = new Vue({
         el: '#app',
         data: {
@@ -10,7 +8,7 @@ var app = new Vue({
             parser: null,
             totalFeeds: 20,
             refreshDate: null,
-            temperature: null,
+			proxy: '',
             selectedTab: 'news',
 			bookmarks: [],
             newBookmark: {}
@@ -45,6 +43,12 @@ var app = new Vue({
 				localStorage.setItem("bookmarks", []);
 	    	}
 			
+			if (localStorage["proxy"]) {
+        		this.proxy = localStorage["proxy"];
+        	} else {
+				localStorage.setItem("proxy", '');
+	    	}
+			
 			this.refreshFeeds();
         },
         methods: {
@@ -75,7 +79,7 @@ var app = new Vue({
                 let singleFeed = Math.round(this.totalFeeds / this.feedUrls.length);
                 this.refreshDate = new Date();
                 this.feedUrls.forEach((url) => {
-                    this.parser.parseURL(CORS_PROXY + url, (err, feed) => {
+                    this.parser.parseURL(this.proxy + url, (err, feed) => {
                         if (err) {
                             throw err;
                         }
