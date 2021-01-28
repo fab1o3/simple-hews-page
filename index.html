@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<title>Home</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-tooltip@3.0.2/dist/css/bulma-tooltip.min.css" />
+
+		<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/rss-parser@3.7.3/dist/rss-parser.min.js"></script>
+		<script defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+		
+		<script defer src="index.js"></script>
+	</head>
+
+	<body>
+		<div id="app" class="container">
+
+			<nav class="navbar" role="navigation" aria-label="main navigation">
+				<div class="navbar-end">
+				</div>
+			</nav>
+			<div class="tabs">
+				<ul>
+					<li v-bind:class="isActive('news')" v-on:click="selectedTab = 'news'"><a>News</a></li>
+					<li v-bind:class="isActive('bookmarks')" v-on:click="selectedTab = 'bookmarks'"><a>Bookmarks</a></li>
+				</ul>
+			</div>
+			<div v-if="selectedTab === 'news'">
+				<h1>Last update: {{ formatDate(refreshDate) }}</h1>
+				<ul id="feeds">
+					<li v-for="feed in feeds">
+						<a v-bind:href="feed.link" target="_blank" class="has-tooltip-bottom has-tooltip-multiline" v-bind:data-tooltip="feed.content">{{ formatDate(feed.pubDate) + feed.title }}</a>
+					</li>
+				</ul>
+			</div>
+			<div v-if="selectedTab === 'bookmarks'">
+				<div class="columns">
+					<div class="column is-half">
+						<input class="input" placeholder="Category" v-model="newBookmark.category" />
+					</div>
+				</div>
+				<div class="columns">
+					<div class="column is-half">
+						<input class="input" placeholder="Name" v-model="newBookmark.name" />
+					</div>
+				</div>
+				<div class="columns">
+					<div class="column">
+						<input class="input" type="url" placeholder="Url" v-model="newBookmark.url" />
+					</div>
+					<div class="column">
+						<button class="button" v-on:click="addBookmark()">New</button>
+					</div>
+				</div>   
+				<ul id="bookmarks" v-for="(item, index) in sortedBookmarks">
+					<li>
+						<a v-bind:href="item.url" target="_blank">{{ item.name }}</a>
+						<a class="delete" v-on:click="deleteBookmark(index)"></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+
+</html>
