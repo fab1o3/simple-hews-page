@@ -57,7 +57,7 @@
 				</div>   
 				<ul id="bookmarks" v-for="(item, index) in sortedBookmarks">
 					<li>
-						<a v-bind:href="item.url" target="_blank">{{ item.name }}</a>
+						<a v-bind:href="item.url" target="_blank" class="has-tooltip-bottom" v-bind:data-tooltip="item.category">{{ item.name }}</a>
 						<a class="delete" v-on:click="deleteBookmark(index)"></a>
 					</li>
 				</ul>
