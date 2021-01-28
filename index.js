@@ -108,7 +108,7 @@ var app = new Vue({
                 }
             },
 			addBookmark: function () {
-                this.bookmarks.push(this.newBookmark);
+                this.bookmarks.push(Object.assign({}, this.newBookmark));
                 localStorage.setItem("bookmarks", JSON.stringify(this.bookmarks));
             },
             deleteBookmark: function (index) {
