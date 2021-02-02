@@ -18,9 +18,11 @@ var app = new Vue({
                 function compare(a, b) {
                     if (a.category !== undefined && b.category !== undefined && a.category != b.category) {
                         return a.category.localeCompare(b.category);
-                    } else {
+                    } else if (a.name !== undefined && b.name !== undefined) {
                         return a.name.localeCompare(b.name);
-                    }
+                    } else {
+						return a.url.localeCompare(b.url);
+					}
                 }
 
                 return this.bookmarks.sort(compare);
@@ -123,6 +125,4 @@ setInterval(refresh, 1800000);
 function refresh() {
     app.feeds = [];
     app.refreshFeeds();
-
-    app.getTemperature();
 }
